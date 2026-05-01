@@ -1,4 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:task_manager/task_list.dart';
+
+
+class Task {
+  String title;
+  String description;
+  DateTime date;
+
+  Task({
+    required this.title,
+    required this.description,
+    required this.date,
+  });
+}
+
 
 class AddList extends StatefulWidget{
   const AddList({super.key});
@@ -8,6 +25,12 @@ class AddList extends StatefulWidget{
 }
 
 class _AddListState extends State<AddList> {
+   final taskController = TextEditingController();
+  final descController = TextEditingController();
+
+  DateTime? selectedDate;
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,56 +42,200 @@ class _AddListState extends State<AddList> {
           
         ),
       body: 
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-              child: Card(
-                elevation: 2,
-                child: Column(
-                  children: [
-                    TextField(
-                      cursorColor: Colors.pink,
-                       keyboardType: TextInputType.name,
-                       minLines: 1,
+      
 
-                       
-                      decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          borderSide: BorderSide(color: Colors.pink)
-                        )
-                      ),
+
+SingleChildScrollView(
+        child: Column(
+          children: [
+
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 100,
+                  horizontal: 20,
+                ),
+
+                child: Card(
+                  elevation: 5,
+                  color: Colors.pink.shade200,
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+
+                    child: Column(
+                      children: [
+
+                        const SizedBox(height: 30),
+
+                        // TASK FIELD
+                        TextField(
+                          controller: taskController,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.name,
+
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+
+                            labelText: "Add Task",
+                            labelStyle:
+                                const TextStyle(color: Colors.pink),
+
+                            prefixIcon: const Icon(
+                              Icons.add_circle_sharp,
+                              color: Colors.pink,
+                            ),
+
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(20),
+
+                              borderSide: const BorderSide(
+                                color: Colors.pink,
+                              ),
+                            ),
+
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(25),
+
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        // DESCRIPTION FIELD
+                        TextField(
+                          controller: descController,
+                          cursorColor: Colors.black,
+                          keyboardType: TextInputType.multiline,
+                          maxLines: 3,
+
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+
+                            labelText: "Description",
+                            labelStyle:
+                                const TextStyle(color: Colors.pink),
+
+                            prefixIcon: const Icon(
+                              Icons.description_rounded,
+                              color: Colors.pink,
+                            ),
+
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(20),
+
+                              borderSide: const BorderSide(
+                                color: Colors.pink,
+                              ),
+                            ),
+
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.circular(25),
+
+                              borderSide: const BorderSide(
+                                color: Colors.white,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 30),
+
+                        // DATE PICKER BUTTON
+                        ElevatedButton(
+                          onPressed: () async {
+
+                            DateTime? pickedDate =
+                                await showDatePicker(
+                              context: context,
+                              firstDate: DateTime(2020),
+                              lastDate: DateTime(2030),
+                            );
+
+                            if (pickedDate != null) {
+                              setState(() {
+                                selectedDate = pickedDate;
+                              });
+                            }
+                          },
+
+                          child: const Text("Choose Date"),
+                        ),
+
+                        const SizedBox(height: 15),
+
+                        // SHOW SELECTED DATE
+                        Text(
+                          selectedDate == null
+                              ? "No Date Selected"
+                              : "${selectedDate!.day}/${selectedDate!.month}/${selectedDate!.year}",
+
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+
+                        const SizedBox(height: 40),
+
+                        // SUBMIT BUTTON
+                        ElevatedButton(
+  onPressed: () {
+
+    if (taskController.text.isEmpty ||
+        descController.text.isEmpty ||
+        selectedDate == null) {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please fill all fields"),
+        ),
+      );
+
+      return;
+    }
+
+    final task = Task(
+      title: taskController.text,
+      description: descController.text,
+      date: selectedDate!,
+    );
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TaskList(task: task),
+      ),
+    );
+  },
+
+  child: const Text("Submit"),
+),
+
+                        const SizedBox(height: 30),
+                      ],
                     ),
-
-
-SizedBox(height: 50,),
-
-
-                    TextField(maxLines: 3,),
-
-  SizedBox(height: 50,),
-                  
-                    OutlinedButton(onPressed: () async {
-                         DateTime? dateTime = await showDatePicker(context: context ,
-                          firstDate: DateTime(2020), lastDate: DateTime(2025));
-                    }, child: Text("Choose Date & Time")),
-
-                   SizedBox(height: 50,),
-                    ElevatedButton(onPressed: (){
-                      
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => AddList()));
-                    }, child: Text("Submit"))
-                  ],
+                  ),
                 ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
+    
+       
       
     );
     
@@ -76,3 +243,129 @@ SizedBox(height: 50,),
 }
   
 
+
+
+
+
+
+
+
+
+
+/*
+     SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 125,horizontal: 20),
+                child: Card(
+                  elevation: 2,
+                  color: Colors.pink.shade200,
+                  
+                  child: Column(
+                    
+                    
+                    children: [
+                      SizedBox(height: 50,),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                        child: TextField(
+                          
+                          controller: addController,
+                          cursorColor: Colors.black,
+                           keyboardType: TextInputType.name,
+                           maxLines: 1,
+                           
+                                  
+                            decoration: InputDecoration(
+                              hoverColor: Colors.white,
+                              filled: true,
+                              fillColor: Colors.white,
+                              focusColor: Colors.white,
+                              
+                              
+                              labelText: "Add Task",
+                              labelStyle: TextStyle(color: Colors.pink),
+                              prefixIcon: Icon(Icons.add_circle_sharp,color: Colors.pink,),
+                              enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.pink,),
+                        
+                        
+                        
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide(color: Colors.white,width: 2,),
+                            ),
+                          ),
+                        ),
+                      ),
+          
+          
+          SizedBox(height: 50,),
+          
+          
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child:  TextField(
+                          cursorColor: Colors.black,
+                           keyboardType: TextInputType.name,
+                           maxLines: 3,
+                           
+                            
+                            decoration: InputDecoration(
+                              hoverColor: Colors.white,
+                              filled: true,
+                              fillColor: Colors.white,
+                              focusColor: Colors.white,
+                              
+
+                              hintStyle: TextStyle(color: Colors.black  ),
+                              labelText: "Description",
+                              labelStyle: TextStyle(color: Colors.pink),
+                              prefixIcon: Icon(Icons.description_rounded,color: Colors.pink,),
+                              
+                              enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide(color: Colors.pink,),
+                        
+                        
+                        
+                            ),
+
+                             focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                                      borderSide: BorderSide(color: Colors.white,width: 2,),
+                            ),
+                          ),),
+                      ),
+          
+            SizedBox(height: 50,),
+                    
+                      ElevatedButton(onPressed: () async {
+                           DateTime? dateTime = await showDatePicker(context: context ,
+                            firstDate: DateTime(2020), lastDate: DateTime(2026,DateTime.december));
+                            selectedDate = dateTime;
+                        setState(() {});
+                      }, child: Text("Choose Date & Time")), 
+          
+                     SizedBox(height: 50,),
+                      ElevatedButton(onPressed: (){
+                        
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => AddList()));
+                      }, child: Text("Submit"))
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+                ),
+        ),
+
+        */

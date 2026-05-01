@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.pink),
       ),
       
-      home: AddList(),
+      home: Introscreen(),
     );
   }
 }
@@ -64,7 +64,7 @@ return Scaffold(
                   child: Text("View Task",style:TextStyle(fontSize: 25,color: Colors.white,fontWeight: FontWeight.w600,),),
                 )),
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TaskList()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddList()));
                 },
                 
               ),
