@@ -66,28 +66,3 @@ class TaskList extends StatelessWidget{
     );
   }
   }
-
-
-// Column(
-//         children: [
-//           Center(
-//             child: Card(
-//               child: Column(
-//                 children: [
-//                   TextField(),
-//                   TextField(maxLines: 3,),
-//                   OutlinedButton(onPressed: () async {
-//                        DateTime? dateTime = await showDatePicker(context: context ,
-//                         firstDate: DateTime(2020), lastDate: DateTime(2025));
-//                   }, child: Text("Choose Date & Time")),
-                 
-//                   ElevatedButton(onPressed: (){
-                    
-//                     Navigator.push(context,MaterialPageRoute(builder: (context) => AddList()));
-//                   }, child: Text("Submit"))
-//                 ],
-//               ),
-//             ),
-//           )
-//         ],
-//       ),

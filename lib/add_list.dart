@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:task_manager/task_list.dart';
 
@@ -37,7 +35,8 @@ class _AddListState extends State<AddList> {
 
         appBar: AppBar(
           backgroundColor: Colors.pink,
-          title: Center(child: Text("Add Task",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w900,color: Colors.white))),
+          title: Center(child: Text("Add Task",style: TextStyle(fontSize: 25,
+          fontWeight: FontWeight.w900,color: Colors.white))),
           iconTheme:IconThemeData(color: Colors.white), //change the arrow color
           
         ),
@@ -242,130 +241,3 @@ SingleChildScrollView(
   }
 }
   
-
-
-
-
-
-
-
-
-
-
-/*
-     SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 125,horizontal: 20),
-                child: Card(
-                  elevation: 2,
-                  color: Colors.pink.shade200,
-                  
-                  child: Column(
-                    
-                    
-                    children: [
-                      SizedBox(height: 50,),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-                        child: TextField(
-                          
-                          controller: addController,
-                          cursorColor: Colors.black,
-                           keyboardType: TextInputType.name,
-                           maxLines: 1,
-                           
-                                  
-                            decoration: InputDecoration(
-                              hoverColor: Colors.white,
-                              filled: true,
-                              fillColor: Colors.white,
-                              focusColor: Colors.white,
-                              
-                              
-                              labelText: "Add Task",
-                              labelStyle: TextStyle(color: Colors.pink),
-                              prefixIcon: Icon(Icons.add_circle_sharp,color: Colors.pink,),
-                              enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(color: Colors.pink,),
-                        
-                        
-                        
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Colors.white,width: 2,),
-                            ),
-                          ),
-                        ),
-                      ),
-          
-          
-          SizedBox(height: 50,),
-          
-          
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child:  TextField(
-                          cursorColor: Colors.black,
-                           keyboardType: TextInputType.name,
-                           maxLines: 3,
-                           
-                            
-                            decoration: InputDecoration(
-                              hoverColor: Colors.white,
-                              filled: true,
-                              fillColor: Colors.white,
-                              focusColor: Colors.white,
-                              
-
-                              hintStyle: TextStyle(color: Colors.black  ),
-                              labelText: "Description",
-                              labelStyle: TextStyle(color: Colors.pink),
-                              prefixIcon: Icon(Icons.description_rounded,color: Colors.pink,),
-                              
-                              enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(color: Colors.pink,),
-                        
-                        
-                        
-                            ),
-
-                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(25),
-                                      borderSide: BorderSide(color: Colors.white,width: 2,),
-                            ),
-                          ),),
-                      ),
-          
-            SizedBox(height: 50,),
-                    
-                      ElevatedButton(onPressed: () async {
-                           DateTime? dateTime = await showDatePicker(context: context ,
-                            firstDate: DateTime(2020), lastDate: DateTime(2026,DateTime.december));
-                            selectedDate = dateTime;
-                        setState(() {});
-                      }, child: Text("Choose Date & Time")), 
-          
-                     SizedBox(height: 50,),
-                      ElevatedButton(onPressed: (){
-                        
-                        Navigator.push(context,MaterialPageRoute(builder: (context) => AddList()));
-                      }, child: Text("Submit"))
-                    ],
-                  ),
-                ),
-              ),
-            )
-          ],
-                ),
-        ),
-
-        */

@@ -21,7 +21,8 @@ class _IntroscreenState extends State<Introscreen> {
     });
    }
    
-    Widget build(BuildContext context) {
+    @override
+      Widget build(BuildContext context) {
       
       return Scaffold(     
         backgroundColor: Colors.pink,
